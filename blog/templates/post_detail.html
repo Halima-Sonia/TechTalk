@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ post.title }} | TechTalk
+{% endblock %}
+
+{% block meta_description %}
+{{ post.content|truncatewords:25 }}
+{% endblock %}
+
+{% block og_title %}
+{{ post.title }} | TechTalk
+{% endblock %}
+
+{% block og_description %}
+{{ post.content|truncatewords:25 }}
+{% endblock %}
+
+{% block og_image %}
+{% if post.featured_image %}
+<meta property="og:image"
+      content="{{ post.featured_image.url }}">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <!-- Category -->
+
+            <span class="badge category-badge mb-3">
+                {{ post.category.name }}
+            </span>
+
+
+            <!-- Title -->
+
+            <h1 class="fw-bold mb-3">
+                {{ post.title }}
+            </h1>
+
+{% if post.featured_image %}
+    <img src="{{ post.featured_image.url }}"
+         class="img-fluid rounded mb-4"
+         alt="{{ post.title }}">
+{% endif %}
+
+            <!-- Author & Date -->
+
+            <a href="{% url 'author_profile' username=post.author.username %}"
+   class="text-decoration-none">
+    <strong>{{ post.author.username }}</strong>
+</a>
+
+
+            <hr>
+
+
+            <!-- Content -->
+
+            <div class="mt-4 post-content">
+                {{ post.content|linebreaks }}
+            </div>
+{% if user.is_authenticated and post.author == user %}
+
+    <a href="{% url 'edit_post' slug=post.slug %}"
+       class="btn btn-outline-primary">
+        ✏️ Edit Post
+    </a>
+
+    <a href="{% url 'delete_post' slug=post.slug %}"
+       class="btn btn-outline-danger">
+        🗑️ Delete Post
+    </a>
+
+{% endif %}
+
+
+
+            <!-- Like Button -->
+
+            <div class="mt-4">
+
+                {% if user.is_authenticated %}
+
+                <a href="{% url 'like_post' post.slug %}" class="btn like-btn">
+
+                    {% if user in post.likes.all %}
+                    ❤️ Unlike
+                    {% else %}
+                    🤍 Like
+                    {% endif %}
+
+                    <span class="like-count">
+                        {{ post.likes.count }}
+                    </span>
+
+                </a>
+
+                {% else %}
+
+                <a href="{% url 'login' %}" class="btn like-btn">
+                    🤍 Like
+                    <span class="like-count">
+                        {{ post.likes.count }}
+                    </span>
+                </a>
+
+                {% endif %}
+                {% if user.is_authenticated %}
+
+    <a href="{% url 'bookmark_post' post.slug %}"
+       class="btn btn-outline-secondary">
+        🔖 Bookmark
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login_user' %}"
+       class="btn btn-outline-secondary">
+        🔖 Login to Bookmark
+    </a>
+
+{% endif %}
+
+            </div>
+            <div class="comments-section mt-5">
+                <h4 class="fw-bold mb-4"> 💬 Comments <span class="comment-count"> {{ post.comments.count }} </span>
+                </h4> <!-- Add Comment --> {% if user.is_authenticated %} <form method="POST"
+                    action="{% url 'add_comment' post.slug %}"> {% csrf_token %} <div class="mb-3"> <textarea
+                            name="content" class="form-control comment-input" rows="4"
+                            placeholder="Write your comment..." required></textarea> </div> <button type="submit"
+                        class="btn comment-btn"> Post Comment </button> </form> {% else %} <div
+                    class="login-comment-box">
+                    <p class="mb-0"> Please <a href="{% url 'login' %}"> login </a> to leave a comment. </p>
+                </div> {% endif %} <!-- Existing Comments -->
+                <div class="mt-4"> {% for comment in post.comments.all %} <div class="comment-card mb-3">
+                        <div class="d-flex justify-content-between"> <strong> {{ comment.user.username }} </strong>
+                            <small> {{ comment.created_at|date:"M d, Y · h:i A" }} </small>
+                        </div>
+                        <p class="mb-0 mt-2"> {{ comment.content|linebreaksbr }} </p>
+                    </div> {% empty %} <p class="no-comments"> No comments yet. Be the first to share your thoughts! 🌿
+                    </p> {% endfor %} </div>
+            </div>
+
+
+            <!-- Back Button -->
+
+            <a href="{% url 'home' %}" class="btn btn-outline-primary mt-4">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+    /* Category */
+
+    .category-badge {
+        background: #E3F4F1;
+        color: #21867A;
+        font-weight: 600;
+        padding: 8px 12px;
+    }
+
+
+    /* Post meta */
+
+    .post-meta {
+        color: #6B7C93;
+    }
+
+
+    /* Content */
+
+    .post-content {
+        color: #243B53;
+        font-size: 17px;
+        line-height: 1.8;
+    }
+
+
+    /* Like button */
+
+    .like-btn {
+        border: 1px solid #2A9D8F;
+        color: #21867A;
+        background: #FFFFFF;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+
+    .like-btn:hover {
+        background: #2A9D8F;
+        border-color: #2A9D8F;
+        color: #FFFFFF;
+    }
+
+
+    .like-count {
+        margin-left: 6px;
+        font-weight: 700;
+    }
+
+    .comments-section {
+        border-top: 1px solid #DCE6F0;
+        padding-top: 30px;
+    }
+
+    .comment-count {
+        color: #6B7C93;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    /* Comment textarea */
+    .comment-input {
+        border: 1px solid #DCE6F0;
+        border-radius: 8px;
+        resize: vertical;
+    }
+
+    .comment-input:focus {
+        border-color: #2A9D8F;
+        box-shadow: 0 0 0 0.2rem rgba(42, 157, 143, 0.15);
+    }
+
+    /* Comment button */
+    .comment-btn {
+        background: #2A9D8F;
+        border-color: #2A9D8F;
+        color: #FFFFFF;
+        font-weight: 600;
+    }
+
+    .comment-btn:hover {
+        background: #21867A;
+        border-color: #21867A;
+        color: #FFFFFF;
+    }
+
+    /* Login message */
+    .login-comment-box {
+        background: #F0F7F7;
+        border: 1px solid #DCE6F0;
+        border-radius: 8px;
+        padding: 15px;
+        color: #6B7C93;
+    }
+
+    .login-comment-box a {
+        color: #21867A;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .login-comment-box a:hover {
+        text-decoration: underline;
+    }
+
+    /* Individual comment */
+    .comment-card {
+        background: #FFFFFF;
+        border: 1px solid #DCE6F0;
+        border-radius: 10px;
+        padding: 18px;
+    }
+
+    .comment-card strong {
+        color: #243B53;
+    }
+
+    .comment-card small {
+        color: #8A9AAD;
+    }
+
+    .comment-card p {
+        color: #4A5D73;
+        line-height: 1.6;
+    }
+
+    /* Empty comments */
+    .no-comments {
+        color: #6B7C93;
+        font-style: italic;
+    }
+</style>
+
+{% endblock %}

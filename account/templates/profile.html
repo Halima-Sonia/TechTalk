@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7 col-lg-6">
+
+            <div class="card shadow-sm border-0">
+
+                <div class="card-body text-center p-5">
+
+                    {% if profile.avatar %}
+
+                        <img src="{{ profile.avatar.url }}"
+                             alt="{{ user.username }}"
+                             class="rounded-circle mb-3"
+                             width="130"
+                             height="130"
+                             style="object-fit: cover;">
+
+                    {% else %}
+
+                        <div class="rounded-circle bg-light d-flex
+                                    align-items-center justify-content-center
+                                    mx-auto mb-3"
+                             style="width: 130px; height: 130px;">
+
+                            <span style="font-size: 55px;">
+                                👤
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+                    <h2 class="mb-1">
+                        {{ user.username }}
+                    </h2>
+
+                    {% if profile.bio %}
+
+                        <p class="text-muted mt-2">
+                            {{ profile.bio }}
+                        </p>
+
+                    {% else %}
+
+                        <p class="text-muted mt-2">
+                            No bio added yet.
+                        </p>
+
+                    {% endif %}
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-center gap-4">
+
+                        <div>
+                            <h5 class="mb-0">
+                                {{ user.posts.count }}
+                            </h5>
+
+                            <small class="text-muted">
+                                Posts
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+
+                        <a href="{% url 'edit_profile' %}"
+                           class="btn btn-primary">
+                            ✏️ Edit Profile
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

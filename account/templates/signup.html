@@ -1,0 +1,204 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up | Mini Blog</title>
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7ff, #eef2ff);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-card {
+            width: 100%;
+            max-width: 480px;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-title {
+            font-weight: 700;
+            color: #343a40;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 11px 13px;
+            border: 1px solid #ced4da;
+        }
+
+        .form-control:focus {
+            border-color: #6f42c1;
+            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.15);
+        }
+
+        .signup-btn {
+            background: #6f42c1;
+            border: none;
+            border-radius: 10px;
+            padding: 11px;
+            font-weight: 600;
+        }
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #6f42c1;
+        }
+
+        .signup-btn:hover {
+            background: #5a32a3;
+        }
+
+        .login-link {
+            color: #6f42c1;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        .help-text {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 6px;
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 5px 0;
+            color: #dc3545;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+<div class="container">
+    <div class="signup-card mx-auto">
+        <div class="logo">
+        <p class="text-center"> TechTalk </p>
+    </div>
+
+        <div class="text-center mb-4">
+            <h2 class="blog-title">Create Your Account</h2>
+            <p class="subtitle mb-0">
+                Join our Mini Blog community
+            </p>
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <!-- Username -->
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+
+                {{ form.username }}
+
+                {% if form.username.errors %}
+                    {{ form.username.errors }}
+                {% endif %}
+            </div>
+
+
+            <!-- Email -->
+            <div class="mb-3">
+                <label class="form-label">Email Address</label>
+
+                {{ form.email }}
+
+                {% if form.email.errors %}
+                    {{ form.email.errors }}
+                {% endif %}
+            </div>
+
+
+            <!-- Password -->
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+
+                {{ form.password1 }}
+
+                {% if form.password1.errors %}
+                    {{ form.password1.errors }}
+                {% endif %}
+
+                <div class="help-text">
+                    Use at least 8 characters with a mix of letters and numbers.
+                </div>
+            </div>
+
+
+            <!-- Confirm Password -->
+            <div class="mb-4">
+                <label class="form-label">Confirm Password</label>
+
+                {{ form.password2 }}
+
+                {% if form.password2.errors %}
+                    {{ form.password2.errors }}
+                {% endif %}
+            </div>
+
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+
+            <button type="submit"
+                    class="btn btn-primary signup-btn w-100">
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div class="text-center mt-4">
+            <span class="text-muted">
+                Already have an account?
+            </span>
+
+            <a href="{% url 'login' %}" class="login-link">
+                Login
+            </a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

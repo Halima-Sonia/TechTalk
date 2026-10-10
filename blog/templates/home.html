@@ -1,0 +1,559 @@
+{% extends 'base.html' %}
+
+{% block title %}
+TechTalk - Home
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container page-container">
+
+
+    <!-- ==============================
+         HERO SECTION
+    ============================== -->
+
+    <section class="hero-section mb-5">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+
+                <div
+                    class="mb-3"
+                    style="
+                        color: #7650E8;
+                        font-weight: 700;
+                        letter-spacing: 1.5px;
+                        font-size: 0.85rem;
+                    "
+                >
+                    ✦ WELCOME TO TECHTALK
+                </div>
+
+
+                <h1
+                    class="display-4 fw-bold mb-3"
+                    style="line-height: 1.15;"
+                >
+                    Explore Ideas.
+                    <br>
+
+                    <span style="color: #7650E8;">
+    Discover What's Next.
+</span>
+                </h1>
+
+
+                <p
+                    class="lead mb-4"
+                    style="
+                        color: #68738A;
+                        max-width: 650px;
+                        line-height: 1.7;
+                    "
+                >
+                    Explore the latest in Artificial Intelligence,
+                    Technology and Lifestyle. Discover useful ideas,
+                    interesting stories and insights that keep you
+                    connected with what's happening around you.
+                </p>
+
+
+                <div class="d-flex flex-wrap gap-2">
+
+                    <a
+                        href="#latest-stories"
+                        class="btn btn-primary"
+                    >
+                        Explore Stories
+                    </a>
+
+                    <a
+                        href="{% url 'discover' %}"
+                        class="btn btn-outline-primary"
+                    >
+                        Discover More
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Decorative side -->
+
+            <div class="col-lg-4 d-none d-lg-block">
+
+                <div
+                    class="text-center"
+                    style="
+                        position: relative;
+                        z-index: 2;
+                    "
+                >
+
+                    <div
+                        style="
+                            width: 180px;
+                            height: 180px;
+                            margin: auto;
+
+                            border-radius: 50%;
+
+                            background:
+                                linear-gradient(
+                                    135deg,
+                                    rgba(49,93,187,0.12),
+                                    rgba(118,80,232,0.16)
+                                );
+
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+
+                            box-shadow:
+                                0 15px 40px
+                                rgba(118,80,232,0.10);
+                        "
+                    >
+
+                        <div
+                            style="
+                                width: 120px;
+                                height: 120px;
+
+                                border-radius: 50%;
+
+                                background: #FFFFFF;
+
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+
+                                font-size: 3rem;
+
+                                box-shadow:
+                                    0 8px 25px
+                                    rgba(30,45,80,0.08);
+                            "
+                        >
+                            ✦
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+        <!-- ==============================
+         TRENDING POSTS
+    ============================== -->
+
+    <section class="mb-5">
+
+        <!-- Section heading -->
+
+        <div class="mb-4">
+
+            <p
+                class="mb-1"
+                style="
+                    color: #7650E8;
+                    font-weight: 700;
+                    font-size: 0.8rem;
+                    letter-spacing: 1px;
+                "
+            >
+                POPULAR RIGHT NOW
+            </p>
+
+            <h2 class="fw-bold mb-0">
+                🔥 Trending on TechTalk
+            </h2>
+
+        </div>
+
+
+        <!-- Trending posts -->
+
+        <div class="row g-4">
+
+            {% for post in trending_posts %}
+
+                <div class="col-md-4">
+
+                    <article class="card h-100 border-0 shadow-sm">
+
+                        <div class="card-body p-4">
+
+                            <!-- Category -->
+
+                            <div class="mb-3">
+
+                                <span
+                                    class="badge"
+                                    style="
+                                        background-color: #F0ECFF;
+                                        color: #7650E8;
+                                    "
+                                >
+                                    {{ post.category.name }}
+                                </span>
+
+                            </div>
+
+
+                            <!-- Title -->
+
+                            <h5
+                                class="fw-bold mb-3"
+                                style="line-height: 1.4;"
+                            >
+                                {{ post.title }}
+                            </h5>
+
+
+                            <!-- Author -->
+
+                            <p
+                                class="small mb-3"
+                                style="color: #68738A;"
+                            >
+                                By
+                                <strong style="color: #315DBB;">
+                                    {{ post.author.username }}
+                                </strong>
+                            </p>
+
+
+                            <!-- Engagement -->
+
+                            <div
+                                class="small mb-4"
+                                style="color: #68738A;"
+                            >
+
+                                ❤️ {{ post.like_count }}
+
+                                <span class="mx-2">
+                                    •
+                                </span>
+
+                                💬 {{ post.comment_count }}
+
+                            </div>
+
+
+                            <!-- Read button -->
+
+                            <a
+                                href="{% url 'post_detail' post.slug %}"
+                                class="btn btn-outline-primary btn-sm"
+                            >
+                                Read Story →
+                            </a>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+
+                    <p class="text-muted">
+                        Trending stories will appear here as readers
+                        interact with posts.
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==============================
+         LATEST STORIES
+    ============================== -->
+
+    <section id="latest-stories">
+
+
+        <!-- Section heading -->
+
+        <div
+            class="d-flex justify-content-between align-items-center mb-4"
+        >
+
+            <div>
+
+                <p
+                    class="mb-1"
+                    style="
+                        color: #7650E8;
+                        font-weight: 700;
+                        font-size: 0.8rem;
+                        letter-spacing: 1px;
+                    "
+                >
+                    FROM THE BLOG
+                </p>
+
+
+                <h2 class="fw-bold mb-0">
+                    Latest Stories
+                </h2>
+
+            </div>
+
+
+            <a
+                href="#latest-stories"
+                class="btn btn-outline-primary d-none d-md-inline-block"
+            >
+                View All
+            </a>
+
+        </div>
+
+
+
+        <!-- ==============================
+             POSTS
+        ============================== -->
+
+        <div class="row g-4">
+
+
+            {% for post in posts %}
+
+
+            <div class="col-md-6 col-lg-4">
+
+
+                <article class="card h-100 overflow-hidden">
+
+
+                    <div class="card-body d-flex flex-column p-4">
+
+
+                        <!-- Category -->
+
+                        <div class="mb-3">
+
+                            <span class="badge bg-primary">
+                                {{ post.category.name }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- Title -->
+
+                        <h4
+                            class="card-title mb-3"
+                            style="
+                                line-height: 1.35;
+                            "
+                        >
+                            {{ post.title }}
+                        </h4>
+
+
+                        <!-- Author + Date -->
+
+                        <p
+                            class="small mb-3"
+                            style="
+                                color: #7A8499;
+                            "
+                        >
+
+                            By
+                            <strong
+                                style="color: #315DBB;"
+                            >
+                                {{ post.author.username }}
+                            </strong>
+
+                            <span class="mx-1">
+                                ·
+                            </span>
+
+                            {{ post.created_at|date:"M d, Y" }}
+
+                        </p>
+
+
+                        <!-- Content -->
+
+                        <p
+                            class="card-text mb-4"
+                            style="
+                                color: #68738A;
+                                line-height: 1.7;
+                            "
+                        >
+                            {{ post.content|truncatewords:25 }}
+                        </p>
+
+
+                        <!-- Read More -->
+
+                        <div class="mt-auto">
+
+                            <a
+                                href="{% url 'post_detail' post.slug %}"
+                                class="btn btn-outline-primary"
+                            >
+                                Read More
+                                <span class="ms-1">
+                                    →
+                                </span>
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+
+                </article>
+
+
+            </div>
+
+
+            {% empty %}
+
+
+            <!-- Empty state -->
+
+            <div class="col-12">
+
+                <div
+                    class="card text-center p-5"
+                >
+
+                    <div
+                        style="
+                            font-size: 2.5rem;
+                            margin-bottom: 15px;
+                        "
+                    >
+                        ✦
+                    </div>
+
+
+                    <h4>
+                        No posts yet
+                    </h4>
+
+
+                    <p class="text-muted mb-0">
+                        There are no posts available right now.
+                        Check back soon for new stories.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+<!-- ==============================
+     EXTRA HOME PAGE STYLES
+============================== -->
+
+<style>
+
+
+    /* Hero heading */
+
+    .hero-section h1 {
+        color: #17213A;
+    }
+
+
+    /* Story card */
+
+    #latest-stories .card {
+        min-height: 280px;
+    }
+
+
+    /* Card title */
+
+    #latest-stories .card-title {
+        transition: color 0.2s ease;
+    }
+
+
+    #latest-stories .card:hover .card-title {
+        color: #7650E8;
+    }
+
+
+    /* Read more arrow */
+
+    #latest-stories .btn-outline-primary {
+        transition:
+            transform 0.2s ease,
+            background-color 0.2s ease,
+            color 0.2s ease;
+    }
+
+
+    #latest-stories .btn-outline-primary:hover {
+        transform: translateX(2px);
+    }
+
+
+    /* Mobile */
+
+    @media (max-width: 576px) {
+
+        .hero-section {
+            padding: 35px 22px;
+        }
+
+
+        .hero-section h1 {
+            font-size: 2.2rem;
+        }
+
+
+        #latest-stories .card {
+            min-height: auto;
+        }
+
+    }
+
+</style>
+
+
+{% endblock %}

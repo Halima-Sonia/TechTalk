@@ -1,0 +1,248 @@
+<footer class="mt-5">
+
+    <div class="container py-2">
+
+        <div class="row g-4">
+
+            <!-- Brand -->
+            <div class="col-lg-4 col-md-6">
+
+                <h3 class="footer-brand fw-bold mb-3">
+                    TechTalk
+                </h3>
+
+                <p class="footer-text">
+                    Your space to explore AI, technology,
+                    productivity and modern digital life.
+                </p>
+
+            </div>
+
+
+            <!-- Quick Links -->
+            <div class="col-lg-2 col-md-6">
+
+                <h5 class="fw-bold mb-3">
+                    Quick Links
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    <li class="mb-2">
+                        <a href="{% url 'home' %}">
+                            Home
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a href="{% url 'category_posts' 'ai' %}">
+                            AI
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a href="{% url 'category_posts' 'tech' %}">
+                            Tech
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a href="{% url 'category_posts' 'lifestyle' %}">
+                            Lifestyle
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- Account -->
+            <div class="col-lg-2 col-md-6">
+
+                <h5 class="fw-bold mb-3">
+                    Account
+                </h5>
+
+                <ul class="list-unstyled">
+
+                    {% if user.is_authenticated %}
+
+                    <li class="mb-2">
+                        <a href="{% url 'profile' %}">
+                            Profile
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+
+                    <li class="mb-2">
+                        <a href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="mb-2">
+                        <a href="{% url 'signup' %}">
+                            Sign Up
+                        </a>
+                    </li>
+
+                    {% endif %}
+
+                </ul>
+
+            </div>
+
+
+            <!-- About -->
+            <div class="col-lg-4 col-md-6">
+
+                <h5 class="fw-bold mb-3">
+                    Stay Curious
+                </h5>
+
+                <p class="footer-text">
+                    Learn something new, discover useful ideas,
+                    and stay updated with the world of technology.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Bottom Bar -->
+
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="d-flex flex-column flex-md-row
+                        justify-content-between align-items-center
+                        py-3">
+
+                <p class="mb-0">
+                    © 2026 <strong>TechTalk</strong>.
+                    All rights reserved.
+                </p>
+
+                <p class="mb-0">
+                    Built with Django ❤️
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<style>
+
+    footer {
+        background: #F5F5FA;
+        color: #17213A;
+        border-top: 1px solid #DFE1EC;
+    }
+
+
+    /* Brand */
+
+    .footer-brand {
+        color: #7650E8;
+        letter-spacing: 0.3px;
+    }
+
+
+    /* Headings */
+
+    footer h5 {
+        color: #17213A;
+        font-size: 0.95rem;
+        margin-bottom: 12px !important;
+    }
+
+
+    /* Text */
+
+    .footer-text {
+        color: #68738A;
+        line-height: 1.6;
+        max-width: 350px;
+        font-size: 0.92rem;
+    }
+
+
+    /* Links */
+
+    footer a {
+        color: #68738A;
+        text-decoration: none;
+        font-size: 0.92rem;
+
+        transition:
+            color 0.2s ease,
+            padding-left 0.2s ease;
+    }
+
+
+    footer a:hover {
+        color: #7650E8;
+        padding-left: 3px;
+    }
+
+
+    /* Bottom bar */
+
+    .footer-bottom {
+        background: #ECECF5;
+        border-top: 1px solid #DFE1EC;
+    }
+
+
+    .footer-bottom p {
+        color: #68738A;
+        font-size: 13px;
+    }
+
+
+    .footer-bottom strong {
+        color: #315DBB;
+    }
+
+
+    /* Mobile */
+
+    @media (max-width: 767px) {
+
+        footer {
+            text-align: center;
+        }
+
+        footer ul {
+            margin-bottom: 8px;
+        }
+
+        .footer-text {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        footer a:hover {
+            padding-left: 0;
+        }
+
+    }
+
+</style>

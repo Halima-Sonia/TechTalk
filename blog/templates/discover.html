@@ -1,0 +1,483 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .discover-page {
+        padding: 60px 0 70px;
+    }
+
+    /* =========================
+       Hero
+       ========================= */
+
+    .discover-hero {
+        text-align: center;
+        max-width: 780px;
+        margin: 0 auto 60px;
+    }
+
+    .discover-label {
+        display: inline-block;
+        padding: 8px 16px;
+        border-radius: 50px;
+        background: #F0ECFF;
+        color: #7650E8;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 18px;
+    }
+
+    .discover-hero h1 {
+        color: #17213A;
+        font-size: 2.8rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 16px;
+    }
+
+    .discover-hero h1 span {
+        color: #7650E8;
+    }
+
+    .discover-hero p {
+        color: #68738A;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 0;
+    }
+
+
+    /* =========================
+       Category Section
+       ========================= */
+
+    .section-heading {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+        color: #17213A;
+        font-weight: 800;
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+
+    .section-heading p {
+        color: #68738A;
+        margin-bottom: 0;
+    }
+
+
+    .area-card {
+        display: block;
+        height: 100%;
+        padding: 30px 26px;
+        background: #FFFFFF;
+        border: 1px solid #E1E6F0;
+        border-radius: 20px;
+        text-decoration: none;
+        transition: all 0.25s ease;
+    }
+
+    .area-card:hover {
+        transform: translateY(-7px);
+        border-color: #D7CDFB;
+        box-shadow: 0 16px 35px rgba(49, 93, 187, 0.10);
+    }
+
+
+    .area-icon {
+        width: 58px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: #F0ECFF;
+        font-size: 1.7rem;
+        margin-bottom: 20px;
+    }
+
+    .area-card h3 {
+        color: #17213A;
+        font-size: 1.3rem;
+        font-weight: 750;
+        margin-bottom: 10px;
+    }
+
+    .area-card p {
+        color: #68738A;
+        line-height: 1.7;
+        font-size: 0.94rem;
+        margin-bottom: 20px;
+    }
+
+    .area-link {
+        color: #315DBB;
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .area-card:hover .area-link {
+        color: #7650E8;
+    }
+
+
+    /* =========================
+       Latest Posts
+       ========================= */
+
+    .latest-section {
+        margin-top: 75px;
+    }
+
+    .latest-card {
+        height: 100%;
+        background: #FFFFFF;
+        border: 1px solid #E1E6F0;
+        border-radius: 18px;
+        overflow: hidden;
+        transition: all 0.25s ease;
+    }
+
+    .latest-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 14px 30px rgba(49, 93, 187, 0.09);
+        border-color: #D7CDFB;
+    }
+
+    .latest-card-body {
+        padding: 24px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .latest-category {
+        display: inline-block;
+        width: fit-content;
+        padding: 5px 11px;
+        border-radius: 50px;
+        background: #F0ECFF;
+        color: #7650E8;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-bottom: 14px;
+    }
+
+    .latest-card h4 {
+        color: #17213A;
+        font-size: 1.15rem;
+        font-weight: 700;
+        line-height: 1.45;
+        margin-bottom: 9px;
+    }
+
+    .latest-meta {
+        color: #68738A;
+        font-size: 0.8rem;
+        margin-bottom: 14px;
+    }
+
+    .latest-excerpt {
+        color: #5F6B82;
+        font-size: 0.92rem;
+        line-height: 1.7;
+        flex-grow: 1;
+        margin-bottom: 20px;
+    }
+
+    .latest-read {
+        color: #315DBB;
+        font-size: 0.88rem;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .latest-read:hover {
+        color: #7650E8;
+    }
+
+
+    /* =========================
+       Empty State
+       ========================= */
+
+    .discover-empty {
+        text-align: center;
+        padding: 40px 20px;
+        background: #FFFFFF;
+        border: 1px solid #E1E6F0;
+        border-radius: 18px;
+    }
+
+    .discover-empty p {
+        color: #68738A;
+        margin-bottom: 0;
+    }
+
+
+    /* =========================
+       Responsive
+       ========================= */
+
+    @media (max-width: 767px) {
+
+        .discover-page {
+            padding: 40px 0 50px;
+        }
+
+        .discover-hero {
+            margin-bottom: 45px;
+        }
+
+        .discover-hero h1 {
+            font-size: 2.15rem;
+        }
+
+        .discover-hero p {
+            font-size: 0.95rem;
+        }
+
+        .latest-section {
+            margin-top: 55px;
+        }
+    }
+</style>
+
+
+<div class="container discover-page">
+
+
+    <!-- =========================
+         Hero
+         ========================= -->
+
+    <section class="discover-hero">
+
+        <span class="discover-label">
+            Discover TechTalk
+        </span>
+
+        <h1>
+            Explore ideas that shape
+            <span>tomorrow.</span>
+        </h1>
+
+        <p>
+            From artificial intelligence and technology to productivity
+            and modern digital life, discover stories, ideas and practical
+            insights across TechTalk.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         Main Areas
+         ========================= -->
+
+    <section>
+
+        <div class="section-heading">
+
+            <h2>
+                Explore Our Areas
+            </h2>
+
+            <p>
+                Find the topics that interest you most.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- AI -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'category_posts' 'ai' %}"
+                    class="area-card"
+                >
+
+                    <div class="area-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        AI
+                    </h3>
+
+                    <p>
+                        Artificial Intelligence, automation,
+                        emerging AI tools and the ideas shaping
+                        the future of technology.
+                    </p>
+
+                    <span class="area-link">
+                        Explore AI →
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- Tech -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'category_posts' 'tech' %}"
+                    class="area-card"
+                >
+
+                    <div class="area-icon">
+                        💻
+                    </div>
+
+                    <h3>
+                        Tech
+                    </h3>
+
+                    <p>
+                        Technology, programming, digital tools
+                        and practical ideas for navigating the
+                        ever-changing tech world.
+                    </p>
+
+                    <span class="area-link">
+                        Explore Tech →
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- Lifestyle -->
+
+            <div class="col-md-4">
+
+                <a
+                    href="{% url 'category_posts' 'lifestyle' %}"
+                    class="area-card"
+                >
+
+                    <div class="area-icon">
+                        🌿
+                    </div>
+
+                    <h3>
+                        Lifestyle
+                    </h3>
+
+                    <p>
+                        Productivity, digital habits and ideas
+                        for building a smarter, more balanced
+                        modern digital life.
+                    </p>
+
+                    <span class="area-link">
+                        Explore Lifestyle →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         Latest Posts
+         ========================= -->
+
+    <section class="latest-section">
+
+        <div class="section-heading">
+
+            <h2>
+                Latest from TechTalk
+            </h2>
+
+            <p>
+                Fresh ideas and stories from our latest posts.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for post in posts %}
+
+            <div class="col-md-6 col-lg-4">
+
+                <article class="latest-card">
+
+                    <div class="latest-card-body">
+
+                        <span class="latest-category">
+                            {{ post.category.name }}
+                        </span>
+
+                        <h4>
+                            {{ post.title }}
+                        </h4>
+
+                        <p class="latest-meta">
+                            By {{ post.author.username }}
+                            · {{ post.created_at|date:"M d, Y" }}
+                        </p>
+
+                        <p class="latest-excerpt">
+                            {{ post.content|truncatewords:25 }}
+                        </p>
+
+                        <a
+                            href="{% url 'post_detail' post.slug %}"
+                            class="latest-read"
+                        >
+                            Read Article →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="discover-empty">
+
+                    <p>
+                        No posts available yet. Check back soon!
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

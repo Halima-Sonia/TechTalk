@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+<!-- Author Profile -->
+<div class="row justify-content-center mb-5">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center p-5">
+
+                <!-- Profile Picture -->
+                {% if profile.avatar %}
+
+                    <img src="{{ profile.avatar.url }}"
+                         alt="{{ author.username }}"
+                         class="rounded-circle mb-3 shadow-sm"
+                         width="130"
+                         height="130"
+                         style="object-fit: cover;">
+
+                {% else %}
+
+                    <div class="rounded-circle bg-light
+                                d-flex align-items-center
+                                justify-content-center
+                                mx-auto mb-3 shadow-sm"
+                         style="width: 130px; height: 130px;">
+
+                        <span style="font-size: 55px;">👤</span>
+
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Username -->
+                <h2 class="fw-bold mb-2">
+                    {{ author.username }}
+                </h2>
+
+
+                <!-- Bio -->
+                {% if profile.bio %}
+
+                    <p class="text-muted mx-auto mb-4"
+                       style="max-width: 600px;">
+                        {{ profile.bio }}
+                    </p>
+
+                {% else %}
+
+                    <p class="text-muted mb-4">
+                        No bio added yet.
+                    </p>
+
+                {% endif %}
+
+
+                <!-- Profile Stats -->
+                <div class="row justify-content-center g-3">
+
+                    <div class="col-4 col-md-3">
+
+                        <div class="p-3 rounded"
+                             style="background-color: var(--light-purple);">
+
+                            <h4 class="fw-bold mb-1">
+                                {{ posts.count }}
+                            </h4>
+
+                            <small class="text-muted">
+                                Posts
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-4 col-md-3">
+
+                        <div class="p-3 rounded"
+                             style="background-color: var(--light-purple);">
+
+                            <h4 class="fw-bold mb-1">
+                                {{ author.date_joined|date:"M Y" }}
+                            </h4>
+
+                            <small class="text-muted">
+                                Joined
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Author's Posts -->
+
+<div class="row">
+
+    <div class="col-12 mb-4">
+
+        <h3 class="fw-bold">
+            📝 {{ author.username }}'s Posts
+        </h3>
+
+        <p class="text-muted">
+            Explore the latest stories published by {{ author.username }}.
+        </p>
+
+    </div>
+
+
+    {% for post in posts %}
+
+        <div class="col-md-6 col-lg-4 mb-4">
+
+            <div class="card h-100 shadow-sm border-0 overflow-hidden">
+
+                <!-- Featured Image -->
+                {% if post.featured_image %}
+
+                    <img src="{{ post.featured_image.url }}"
+                         class="card-img-top"
+                         style="height: 210px; object-fit: cover;"
+                         alt="{{ post.title }}">
+
+                {% endif %}
+
+
+                <div class="card-body d-flex flex-column">
+
+                    <!-- Category -->
+                    <div class="mb-2">
+
+                        <span class="badge"
+                              style="background-color: var(--light-purple);
+                                     color: var(--primary-purple);">
+
+                            {{ post.category.name }}
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- Title -->
+                    <h5 class="card-title fw-bold">
+                        {{ post.title }}
+                    </h5>
+
+
+                    <!-- Date -->
+                    <p class="text-muted small mb-3">
+                        {{ post.created_at|date:"M d, Y" }}
+                    </p>
+
+
+                    <!-- Post Stats -->
+                    <div class="text-muted small mb-3">
+
+                        ❤️ {{ post.likes.count }}
+
+                        <span class="mx-2">•</span>
+
+                        🔖 {{ post.bookmarks.count }}
+
+                    </div>
+
+
+                    <!-- Read Button -->
+                    <div class="mt-auto">
+
+                        <a href="{% url 'post_detail' slug=post.slug %}"
+                           class="btn btn-outline-primary">
+
+                            Read More →
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    {% empty %}
+
+        <div class="col-12">
+
+            <div class="text-center py-5">
+
+                <div style="font-size: 55px;">
+                    📝
+                </div>
+
+                <h5 class="fw-bold mt-3">
+                    No posts yet
+                </h5>
+
+                <p class="text-muted">
+                    This author hasn't published any posts yet.
+                </p>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}
